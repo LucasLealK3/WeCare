@@ -1,64 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View 
-} from 'react-native';
-import firebase from './src/services/firebaseConnect';
-
-console.disableYellowBox=true;
-//Se eu utilizar método "on", ele atualiza em tempo real
-// Se eu não precisar utilizar em tempo real, posso utilizar o once
-//Sabendo que o on demanda mais recurso.
+import React from 'react';
+import AppLoading from 'expo-app-loading';
+import { Welcome } from './src/pages/Welcome';
+import {
+  useFonts,
+  Jost_400Regular,
+  Jost_600SemiBold
+} from '@expo-google-fonts/jost';
 
 export default function App() {
-  const [nome,setNome] = useState('Carregando...');
-  const [email, setEmail] = useState('');
+  const [fontsLoaded] = useFonts ({
+    Jost_400Regular,
+    Jost_600SemiBold
+  });
 
-  useEffect(()=> {
-    async function dados(){
-    //Olheiro da nossa database
-    /* //Criar um (nó)
-    await firebase.database().ref('tipo').set('Vendedor');
-
-    //Remove um nó
-    await firebase.database().ref('tipo').remove();
-    await firebase.database().ref('usuarios').child(3).set({
-      nome: 'Jose',
-      email: 'jose@hotmail.com'
-    });
-    await firebase.database().ref('usuarios').child(3)
-    .update({
-      nome: 'Jose augusto'
-    })
-    */
-
-    await firebase.database().ref('Alunos/1').on('value', (snapshot)=> {
-    setNome(snapshot.val().nome);
-    //setEmail(snapshot.val().idade);
-    });
-    }
-    dados();
-    }, []);
-   
+  if(!fontsLoaded)
+    return <AppLoading />
+  
   return (
-    <View style={styles.container}>
-      <Text>Testando o BD!</Text>
-      <Text style={styles.nameTitle}> Nome: {nome} </Text>      
-      <StatusBar style="auto" />
-    </View>
-  );
+    <Welcome />
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  nameTitle: {
-    fontSize: 24
-  }
-});
