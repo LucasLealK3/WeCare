@@ -3,10 +3,10 @@ import {
     Text,
     View,
     Image,
-    TouchableOpacity,
     StyleSheet,
     Dimensions,
-    SafeAreaView
+    SafeAreaView,
+    TouchableOpacity
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import people from '../assets/people.png';

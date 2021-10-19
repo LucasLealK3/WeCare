@@ -1,6 +1,6 @@
 import React from 'react';
 import AppLoading from 'expo-app-loading';
-import { Welcome } from './src/pages/Welcome';
+import { Login } from './src/pages/Login';
 import {
   useFonts,
   Jost_400Regular,
@@ -17,6 +17,6 @@ export default function App() {
     return <AppLoading />
   
   return (
-    <Welcome />
+    <Login />
   )
 }
