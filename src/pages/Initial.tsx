@@ -1,10 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { 
-  KeyboardAvoidingView,
+import React, { useState } from 'react';
+import {
   SafeAreaView,
   StyleSheet,
   Dimensions,
-  Platform,
   Image,
   Text,
   View
@@ -13,47 +11,44 @@ import {
 import { Button } from '../components/Button';
 import { useNavigation } from '@react-navigation/core';
 
-import firebase from '../services/firebaseConnect';
-import people from '../assets/happyEmoji.png';
+import people from '../assets/people.png';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
-export function  Welcome(){
-  const [name,setName] = useState();
+export function  Initial(){
   const navigation = useNavigation();
 
-  /*  function handle(){
+  function handleLogin(){
       //@ts-ignore
-      navigation.navigate('');
-  } */
-  async function dados(){
-    await firebase.database().ref('Usuarios').on('value', (snapshot)=> {
-      setName(snapshot.val().nome);
-      });
+      navigation.navigate('Login');
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container}>        
-          <View style={styles.header}>                  
-          <Image
-            source={people}
-            style={styles.image}
-            resizeMode="contain"
-          />  
+      <View style={styles.container}>
+          <View style={styles.header}> 
             <Text style={styles.title}>
-              Bem vindo {name}
-            </Text>                       
+              Ajude ou seja ajudado
+            </Text>
+            <Image
+              source={people}
+              style={styles.image}
+              resizeMode="contain"
+            />              
           </View> 
           <Text style={styles.subtitle}>
-                Estamos felizes em vê-lo, sinta-se a vontade
-                para ajudar ou fazer pedidos de ajuda em nossa comunidade.
-          </Text>            
+                Para a construção de um mundo melhor,
+                a sua participação é muito importante.
+          </Text>                  
           <View style={styles.footer}>   
             <Button 
-              title="Continuar"
-              //onPress={handle}
-            />     
+              title="Entrar"
+              onPress={handleLogin}
+            />
+            <Button 
+              title="Cadastrar"
+              //onPress={handleSave}
+            />         
           </View>         
         </View>
     </SafeAreaView>
@@ -77,6 +72,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
+    marginTop: 30,
     lineHeight: 32,
     textAlign: 'center',
     color: colors.green,

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { 
   KeyboardAvoidingView,
@@ -10,26 +11,50 @@ import {
 } from 'react-native';
 
 import { Button } from '../components/Button';
+import { useNavigation } from '@react-navigation/core';
+
+import firebase from '../services/firebaseConnect';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
+console.disableYellowBox=true;
+
 export function  Login(){
+  const navigation = useNavigation();
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState (false);
-  const [name, setName] = useState <string>();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState('');
+
+  function handleWelcome(){
+    //@ts-ignore
+    navigation.navigate('Welcome');
+  }
 
   function handleInputBlur(){
     setIsFocused(false);
-    setIsFilled(!!name);
+    setIsFilled(!!email);
   }
 
   function handleInputFocus(){
     setIsFocused(true);
   }
 
-  function handleInputChange(value: string){
-    setIsFilled(!!value);
-    setName(value);
+  async function logar(){
+    await firebase.auth().signInWithEmailAndPassword(email, password)
+    .then( (value) => {
+      alert('Bem-vindo: ' + value.user.email);
+      setUser(value.user.email);
+      handleWelcome()
+    })
+    .catch( (error) => {
+        alert('Algo de errado não está certo!');
+        return;
+    })
+
+    setEmail('');
+    setPassword('');
   }
 
   return (
@@ -41,9 +66,6 @@ export function  Login(){
         <View style={styles.content}>
           <View style={styles.form}>
             <View style={styles.header}> 
-              {/* <Text style={styles.icon}>
-                { isFilled ? 'Icone App' : 'Outro icone' }
-              </Text> */}
               <Text style={styles.title}>
                 Entrar
               </Text>
@@ -57,10 +79,11 @@ export function  Login(){
                 (isFocused || isFilled) && 
                 {borderColor: colors.green}
               ]}
-              placeholder="Digite seu nome"
+              placeholder="Digite seu e-mail"
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
-              onChangeText={handleInputChange}
+              onChangeText={(texto) => setEmail(texto)}
+              value={email}
             />  
             <TextInput
               style={[
@@ -71,12 +94,13 @@ export function  Login(){
               placeholder="Digite sua senha"
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
-              onChangeText={handleInputChange}
+              onChangeText={(texto) => setPassword(texto) }
+              value={password}              
             />                   
             <View style={styles.footer}>   
               <Button 
               title="Entrar"
-              //onPress={handleSave}
+              onPress={logar}
               />
               <Button 
                 title="Esqueci minha senha"
