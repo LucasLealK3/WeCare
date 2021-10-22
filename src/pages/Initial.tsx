@@ -22,7 +22,7 @@ export function  Initial(){
   
   function handleLogin(){
     //@ts-ignore
-    navigation.navigate('Login');
+    navigation.navigate('Menu');
   }
   function handleRegistration(){
     //@ts-ignore

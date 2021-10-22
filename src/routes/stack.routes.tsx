@@ -7,6 +7,7 @@ import { Login } from '../pages/Login';
 import { Welcome } from '../pages/Welcome';
 import { Registration } from '../pages/Registration';
 import { ForgotPassword } from '../pages/ForgotPassword';
+import { Menu } from '../pages/Menu';
 
 
 const stackRoutes = createStackNavigator();
@@ -44,6 +45,10 @@ const AppRoutes: React.FC = () => (
     <stackRoutes.Screen 
       name="ForgotPassword"
       component={ForgotPassword} 
+    /> 
+    <stackRoutes.Screen 
+      name="Menu"
+      component={Menu} 
     /> 
 
   </stackRoutes.Navigator>

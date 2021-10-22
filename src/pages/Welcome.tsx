@@ -24,10 +24,10 @@ export function  Welcome(){
   const [name,setName] = useState();
   const navigation = useNavigation();
 
-  /*  function handle(){
-      //@ts-ignore
-      navigation.navigate('');
-  } */
+  function handleMenu(){
+    //@ts-ignore
+    navigation.navigate('Menu');
+  } 
   async function dados(){
     await firebase.database().ref('Usuarios').on('value', (snapshot)=> {
       setName(snapshot.val().nome);
@@ -54,7 +54,7 @@ export function  Welcome(){
           <View style={styles.footer}>   
             <Button 
               title="Continuar"
-              //onPress={handle}
+              onPress={handleMenu}
             />     
           </View>         
         </View>
