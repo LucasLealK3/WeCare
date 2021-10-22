@@ -15,12 +15,18 @@ import people from '../assets/people.png';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
+console.disableYellowBox=true;
+
 export function  Initial(){
   const navigation = useNavigation();
-
+  
   function handleLogin(){
-      //@ts-ignore
-      navigation.navigate('Login');
+    //@ts-ignore
+    navigation.navigate('Login');
+  }
+  function handleRegistration(){
+    //@ts-ignore
+    navigation.navigate('Registration');
   }
 
   return (
@@ -47,7 +53,7 @@ export function  Initial(){
             />
             <Button 
               title="Cadastrar"
-              //onPress={handleSave}
+              onPress={handleRegistration}
             />         
           </View>         
         </View>

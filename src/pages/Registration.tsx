@@ -18,22 +18,61 @@ import fonts from '../styles/fonts';
 
 console.disableYellowBox=true;
 
-export function  Login(){
+export function  Registration(){
   const navigation = useNavigation();
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState (false);
-  const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState('');
-  
-  function handleWelcome(){
-    //@ts-ignore
-    navigation.navigate('Welcome');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  async function registration(){
+    if(      
+      name == '' || 
+      email == '' ||
+      phone == '' ||
+      password == '' ||
+      confirmPassword == ''
+    ){
+      alert('Preencha todos os campos!');
+    }else if(password !== confirmPassword){
+      alert('As senhas devem ser iguais!');
+      setPassword('');
+      setConfirmPassword('');
+    }else {
+      await firebase.auth().createUserWithEmailAndPassword(email, password)
+
+      .then((value)=> {
+        //alert(value.user.uid);
+        firebase.database().ref('Usuarios').child(value.user.uid).set({
+          nome: name,
+          contato: phone,          
+         })
+
+        alert('Usuario criado com sucesso!');
+        setName('');
+        setEmail('');
+        setPhone('');
+        setPassword('');
+        setConfirmPassword('');       
+        handleLogin()
+      })
+      .catch((error)=>{
+        alert('Algo de errado não está certo!');
+      })      
+      setName('');
+      setEmail('');
+      setPhone('');
+      setPassword('');
+      setConfirmPassword('');
+    }
   }
-  function handleForgotPassword(){
+
+  function handleLogin(){
     //@ts-ignore
-    navigation.navigate('ForgotPassword');
+    navigation.navigate('Login');
   }
 
   function handleInputBlur(){
@@ -43,22 +82,6 @@ export function  Login(){
 
   function handleInputFocus(){
     setIsFocused(true);
-  }
-
-  async function logInto(){
-    await firebase.auth().signInWithEmailAndPassword(email, password)
-    .then( (value) => {
-      alert('Bem-vindo: ' + value.user.email);
-      setUser(value.user.email);
-      handleWelcome()
-    })
-    .catch( (error) => {
-        alert('Algo de errado não está certo!');
-        return;
-    })
-
-    setEmail('');
-    setPassword('');
   }
 
   return (
@@ -71,7 +94,7 @@ export function  Login(){
           <View style={styles.form}>
             <View style={styles.header}> 
               <Text style={styles.title}>
-                Entrar
+                Cadastre-se!
               </Text>
               <Text style={styles.subtitle}>
                 Preencha os campos abaixo.
@@ -83,33 +106,65 @@ export function  Login(){
                 (isFocused || isFilled) && 
                 {borderColor: colors.green}
               ]}
-              placeholder="Digite seu e-mail"
+              placeholder="Nome"
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
-              onChangeText={(text) => setEmail(text)}
-              value={email}
-            />  
+              onChangeText={(text) => setName(text)}
+              value={name}
+            />          
             <TextInput
               style={[
                 styles.input,
                 (isFocused || isFilled) && 
                 {borderColor: colors.green}
               ]}
-              placeholder="Digite sua senha"
+              placeholder="E-mail"
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
-              onChangeText={(text) => setPassword(text) }
-              value={password}              
-            />                   
+              onChangeText={(text) => setEmail(text)}
+              value={email}
+            />
+            <TextInput
+              style={[
+                styles.input,
+                (isFocused || isFilled) && 
+                {borderColor: colors.green}
+              ]}
+              placeholder="Whatsapp"
+              onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
+              onChangeText={(text) => setPhone(text)}
+              value={phone}
+            />
+            <TextInput
+              style={[
+                styles.input,
+                (isFocused || isFilled) && 
+                {borderColor: colors.green}
+              ]}
+              placeholder="Senha"
+              onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
+              onChangeText={(text) => setPassword(text)}
+              value={password}
+            />
+            <TextInput
+              style={[
+                styles.input,
+                (isFocused || isFilled) && 
+                {borderColor: colors.green}
+              ]}
+              placeholder="Confirme senha"
+              onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
+              onChangeText={(text) => setConfirmPassword(text)}
+              value={confirmPassword}
+            />         
             <View style={styles.footer}>   
               <Button 
-              title="Entrar"
-              onPress={logInto}
-              />
-              <Button 
-                title="Esqueci minha senha"
-                onPress={handleForgotPassword}
-              />         
+              title="Cadastrar"
+              onPress={registration}
+              />    
             </View>         
           </View>
         </View>    
@@ -132,7 +187,7 @@ const styles = StyleSheet.create({
   form: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 55,
+    paddingHorizontal: 40,
     alignItems: 'center'
   },
   header: {
@@ -144,17 +199,17 @@ const styles = StyleSheet.create({
     color: colors.heading,
     width: '100%',
     fontSize: 20,
-    marginTop: 50,
+    marginTop: 10,
     padding: 10,
     textAlign: 'center'
   },
   title: {
-    fontSize: 30,
+    fontSize: 28,
     lineHeight: 32,
     textAlign: 'center',
     color: colors.green,
     fontFamily: fonts.heading,
-    marginTop: 20
+    marginTop: 10
   },
   subtitle: {
     fontSize: 18,
@@ -165,7 +220,7 @@ const styles = StyleSheet.create({
   },
   footer:{
     width: '100%',
-    marginTop: 40,
+    marginTop: 30,
     paddingHorizontal: 20
   }
 });

@@ -5,6 +5,8 @@ import colors from '../styles/colors';
 import { Initial } from '../pages/Initial';
 import { Login } from '../pages/Login';
 import { Welcome } from '../pages/Welcome';
+import { Registration } from '../pages/Registration';
+import { ForgotPassword } from '../pages/ForgotPassword';
 
 
 const stackRoutes = createStackNavigator();
@@ -33,6 +35,16 @@ const AppRoutes: React.FC = () => (
       name="Welcome"
       component={Welcome} 
     />
+
+    <stackRoutes.Screen 
+      name="Registration"
+      component={Registration} 
+    /> 
+
+    <stackRoutes.Screen 
+      name="ForgotPassword"
+      component={ForgotPassword} 
+    /> 
 
   </stackRoutes.Navigator>
 )

@@ -18,22 +18,15 @@ import fonts from '../styles/fonts';
 
 console.disableYellowBox=true;
 
-export function  Login(){
+export function  ForgotPassword(){
   const navigation = useNavigation();
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState (false);
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [user, setUser] = useState('');
-  
-  function handleWelcome(){
+
+  function handleLogin(){
     //@ts-ignore
-    navigation.navigate('Welcome');
-  }
-  function handleForgotPassword(){
-    //@ts-ignore
-    navigation.navigate('ForgotPassword');
+    navigation.navigate('Login');
   }
 
   function handleInputBlur(){
@@ -45,20 +38,18 @@ export function  Login(){
     setIsFocused(true);
   }
 
-  async function logInto(){
-    await firebase.auth().signInWithEmailAndPassword(email, password)
-    .then( (value) => {
-      alert('Bem-vindo: ' + value.user.email);
-      setUser(value.user.email);
-      handleWelcome()
-    })
-    .catch( (error) => {
-        alert('Algo de errado não está certo!');
-        return;
-    })
-
-    setEmail('');
-    setPassword('');
+  async function ForgotPassword(){
+    await firebase.auth().sendPasswordResetEmail(email)
+        .then(() => {
+            alert('Verifique sua caixa de entrada.')
+            handleLogin()
+        })
+    .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+    });
   }
 
   return (
@@ -71,10 +62,10 @@ export function  Login(){
           <View style={styles.form}>
             <View style={styles.header}> 
               <Text style={styles.title}>
-                Entrar
+                Esqueceu sua senha?
               </Text>
               <Text style={styles.subtitle}>
-                Preencha os campos abaixo.
+                Receba sua redefinição de senha por e-mail.
               </Text>
             </View> 
             <TextInput
@@ -88,28 +79,12 @@ export function  Login(){
               onFocus={handleInputFocus}
               onChangeText={(text) => setEmail(text)}
               value={email}
-            />  
-            <TextInput
-              style={[
-                styles.input,
-                (isFocused || isFilled) && 
-                {borderColor: colors.green}
-              ]}
-              placeholder="Digite sua senha"
-              onBlur={handleInputBlur}
-              onFocus={handleInputFocus}
-              onChangeText={(text) => setPassword(text) }
-              value={password}              
             />                   
             <View style={styles.footer}>   
               <Button 
-              title="Entrar"
-              onPress={logInto}
-              />
-              <Button 
-                title="Esqueci minha senha"
-                onPress={handleForgotPassword}
-              />         
+              title="Enviar"
+              onPress={ForgotPassword}
+              />    
             </View>         
           </View>
         </View>    
