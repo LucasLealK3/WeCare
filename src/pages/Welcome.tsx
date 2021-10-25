@@ -1,10 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { 
-  KeyboardAvoidingView,
+import React, { useEffect, useState } from 'react';
+import {
   SafeAreaView,
   StyleSheet,
   Dimensions,
-  Platform,
   Image,
   Text,
   View
@@ -22,17 +20,23 @@ console.disableYellowBox=true;
 
 export function  Welcome(){
   const [name,setName] = useState();
+  const [email, setEmail] = useState('');
+
+  useEffect(()=> {
+    async function dados(){
+    await firebase.database().ref('Alunos/1').on('value', (snapshot)=> {
+    setName(snapshot.val().nome);
+    });
+    }
+    dados();
+    
+  }, []);
   const navigation = useNavigation();
 
   function handleMenu(){
     //@ts-ignore
     navigation.navigate('Menu');
   } 
-  async function dados(){
-    await firebase.database().ref('Usuarios').on('value', (snapshot)=> {
-      setName(snapshot.val().nome);
-      });
-  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,7 +48,7 @@ export function  Welcome(){
             resizeMode="contain"
           />  
             <Text style={styles.title}>
-              Bem vindo {name}
+              Bem-vindo {name}
             </Text>                       
           </View> 
           <Text style={styles.subtitle}>

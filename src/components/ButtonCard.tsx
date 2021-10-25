@@ -1,36 +1,37 @@
-import React from 'react';
-import {
+import React from "react";  
+import { 
+  TouchableOpacityProps,
   TouchableOpacity,
-  StyleSheet, 
+  StyleSheet,
   Image,
-  Text,
-  FlatList,
+  Text  
 } from 'react-native';
-import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
-import colors from '../styles/colors';
-import fonts from '../styles/fonts';
 
-interface ButtonProps extends RectButtonProps {
+import colors from '../styles/colors'
+import fonts from "../styles/fonts";
+
+interface ButtonProps extends TouchableOpacityProps {
   title: string;
-}
+  image: Image;
+};
 
-export const ButtonCard = ({title, ...rest} : ButtonProps) => {
-  return (
-    <TouchableOpacity
+export function ButtonCard({ title, image, ...rest }: ButtonProps ){
+  return(
+    <TouchableOpacity 
       style={styles.container} 
-      activeOpacity={0.5}
-    > 
-      <Image 
-      source={require('../assets/happyEmoji.png')} 
-      style={styles.buttonImageIconStyle} 
-    />  
-    <Text style={styles.buttonTextStyle}> 
-    Login Usando Facebook 
-    </Text> 
-</TouchableOpacity>
+      {...rest}
+    >
+      <Image
+      //@ts-ignore
+      source={image}
+      />
 
+      <Text style={styles.text}>        
+        { title } 
+      </Text>
+    </TouchableOpacity>
   )
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -39,16 +40,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.shape,
     borderRadius: 20,
     alignItems: 'center',
-    margin: 10
+    margin: 5
   },
-  buttonImageIconStyle: {
-
-  },
-  buttonTextStyle: {
-
+  image: {
+    
+		flex: 1,
+		paddingHorizontal: 32,
+		justifyContent: 'center'
   },
   text: {
     color: colors.green_dark,
-    fontFamily: fonts.heading,
+    fontFamily: fonts.heading
   }
 })

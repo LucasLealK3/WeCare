@@ -6,27 +6,40 @@ Image,
 Text,
 View
 } from 'react-native';
-import { FlatList } from "react-native-gesture-handler";
 import { ButtonCard } from "../components/ButtonCard";
 //import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 //import userImg from '../assets/lucas.png';
+import { useNavigation } from '@react-navigation/core';
 import { ChoiceButton } from "../components/ChoiceButton";
 import { Header } from '../components/Header';
+import alimentacao from '../assets/alimentacao.png';
+import higiene from '../assets/higiene.png';
+import limpeza from '../assets/limpeza.png';
+import moveis from '../assets/moveis.png';
+import voluntariado from '../assets/voluntariado.png';
+import todos from '../assets/todos.png';
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
+
 
 
 export function Menu(){
   //const [userName, setUserName] = useState<string>();
   
-/*   useEffect(() => {
+  /*   useEffect(() => {
     async function loadStorageUserName() {
       const user = await AsyncStorage.getItem('@plantmanager:user');
       setUserName(user || 'Null');
     }
     loadStorageUserName();
   },[]); */
+  const navigation = useNavigation();
+
+  function teste(){
+    //@ts-ignore
+    navigation.navigate('Initial');
+  }
 
   return (
     <View style={styles.container}>
@@ -42,12 +55,42 @@ export function Menu(){
       </View>
       <View style={styles.choice}>
         <ChoiceButton title= "Pedir Ajuda"/>
-        <ChoiceButton title= "Ajudar" />
+        <ChoiceButton title= "Ajudar"/>
       </View>
       
       <View style={styles.cards}>        
-        <ButtonCard title= "Pedir Ajuda"/>
-        <ButtonCard title= "Ajudar" />        
+        <ButtonCard 
+          title= "Alimentação"
+          image= {alimentacao}
+        />
+        <ButtonCard
+          title= "Higiene"
+          image= {higiene}
+        />                  
+      </View>
+
+      <View style={styles.cards}>        
+        <ButtonCard 
+          title= "Limpeza"
+          image= {limpeza}
+        />
+        <ButtonCard
+          title= "Móveis"
+          image= {moveis} 
+        />                  
+      </View>
+
+      <View style={styles.cards}>        
+        <ButtonCard 
+          title= "Voluntáriado"
+          image= {voluntariado}
+        />
+        <ButtonCard
+          title= "Todos"
+          image={todos} 
+          
+          onPress={teste}
+        />                  
       </View>
     </View>
   )
@@ -74,6 +117,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5
   },
   cards: {
+    
+    flexDirection: 'row',
+    paddingHorizontal: 25,
+    marginLeft: 10,
+    paddingVertical:1,
+    marginTop: 5  
 
   },
   title: {

@@ -22,7 +22,7 @@ export function  Initial(){
   
   function handleLogin(){
     //@ts-ignore
-    navigation.navigate('Menu');
+    navigation.navigate('Welcome'); //Aqui é pra mandar pra pag login, só esta assim pra testar
   }
   function handleRegistration(){
     //@ts-ignore
