@@ -5,31 +5,30 @@ Image,
 Text,
 View
 } from 'react-native';
-
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
-import { Button } from "./Button";
+import { Button } from "../Components/Button";
 import { useNavigation } from '@react-navigation/core';
 
 
-export function Header(){  
+export function Profile(){  
   const navigation = useNavigation();
-  function handleProfile(){
+  function handleMenu(){
     //@ts-ignore
-    navigation.navigate('Profile'); 
+    navigation.navigate('Menu'); 
   }
-
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.greeting}>Olá, </Text>
         <Text style={styles.userName}>
-          Lucas {/* {userName} */}
+          Lucas{/* {userName} */}
         </Text>
       </View>
       <Button 
-        title="    Perfil    "
-        onPress={handleProfile}
+        title="    Menu    "
+        onPress={handleMenu}
+        
       />
     </View>    
   )
@@ -41,13 +40,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
-    //marginTop: getStatusBarHeight()
+    paddingVertical: 20,
+    lineHeight: 20,
+    paddingHorizontal: 30
   },
   greeting: {
     fontSize: 32,
     color: colors.heading,
-    fontFamily: fonts.text
+    fontFamily: fonts.text,
+    lineHeight: 20
   },
   userName: {
     fontSize: 32,

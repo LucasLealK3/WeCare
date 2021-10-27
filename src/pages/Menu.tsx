@@ -13,6 +13,7 @@ import { ButtonCard } from "../components/ButtonCard";
 import { useNavigation } from '@react-navigation/core';
 import { ChoiceButton } from "../components/ChoiceButton";
 import { Header } from '../components/Header';
+import { Button } from '../components/Button';
 import alimentacao from '../assets/alimentacao.png';
 import higiene from '../assets/higiene.png';
 import limpeza from '../assets/limpeza.png';
@@ -57,40 +58,40 @@ export function Menu(){
         <ChoiceButton title= "Pedir Ajuda"/>
         <ChoiceButton title= "Ajudar"/>
       </View>
-      
-      <View style={styles.cards}>        
-        <ButtonCard 
-          title= "Alimentação"
-          image= {alimentacao}
-        />
-        <ButtonCard
-          title= "Higiene"
-          image= {higiene}
-        />                  
-      </View>
+      <View style={styles.cards}>
+        <View style={styles.card}>        
+          <ButtonCard 
+            title= "Alimentação"
+            image= {alimentacao}
+          />
+          <ButtonCard
+            title= "Higiene"
+            image= {higiene}
+          />                  
+        </View>
 
-      <View style={styles.cards}>        
-        <ButtonCard 
-          title= "Limpeza"
-          image= {limpeza}
-        />
-        <ButtonCard
-          title= "Móveis"
-          image= {moveis} 
-        />                  
-      </View>
+        <View style={styles.card}>        
+          <ButtonCard 
+            title= "Limpeza"
+            image= {limpeza}
+          />
+          <ButtonCard
+            title= "Móveis"
+            image= {moveis} 
+          />                  
+        </View>
 
-      <View style={styles.cards}>        
-        <ButtonCard 
-          title= "Voluntáriado"
-          image= {voluntariado}
-        />
-        <ButtonCard
-          title= "Todos"
-          image={todos} 
-          
-          onPress={teste}
-        />                  
+        <View style={styles.card}>        
+          <ButtonCard 
+            title= "Voluntáriado"
+            image= {voluntariado}
+          />
+          <ButtonCard
+            title= "Todos"
+            image={todos}           
+            onPress={teste}
+          />                  
+        </View>
       </View>
     </View>
   )
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     justifyContent: 'space-between',
-    paddingVertical: 20,
+    paddingVertical: 20
   },
   greeting: {
     fontSize: 32,
@@ -118,9 +119,12 @@ const styles = StyleSheet.create({
   },
   cards: {
     
+  },
+  card: {
+    justifyContent: 'center',
     flexDirection: 'row',
     paddingHorizontal: 25,
-    marginLeft: 10,
+    marginLeft: 15,
     paddingVertical:1,
     marginTop: 5  
 
