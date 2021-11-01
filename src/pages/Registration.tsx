@@ -25,6 +25,7 @@ export function  Registration(){
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [bairro, setBairro] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -33,6 +34,7 @@ export function  Registration(){
       name == '' || 
       email == '' ||
       phone == '' ||
+      bairro == '' ||
       password == '' ||
       confirmPassword == ''
     ){
@@ -48,13 +50,15 @@ export function  Registration(){
         //alert(value.user.uid);
         firebase.database().ref('Usuarios').child(value.user.uid).set({
           nome: name,
-          contato: phone,          
+          contato: phone,
+          bairro: bairro,          
          })
 
         alert('Usuario criado com sucesso!');
         setName('');
         setEmail('');
         setPhone('');
+        setBairro('');
         setPassword('');
         setConfirmPassword('');       
         handleLogin()
@@ -65,6 +69,7 @@ export function  Registration(){
       setName('');
       setEmail('');
       setPhone('');
+      setBairro('');
       setPassword('');
       setConfirmPassword('');
     }
@@ -111,18 +116,6 @@ export function  Registration(){
               onFocus={handleInputFocus}
               onChangeText={(text) => setName(text)}
               value={name}
-            />          
-            <TextInput
-              style={[
-                styles.input,
-                (isFocused || isFilled) && 
-                {borderColor: colors.green}
-              ]}
-              placeholder="E-mail"
-              onBlur={handleInputBlur}
-              onFocus={handleInputFocus}
-              onChangeText={(text) => setEmail(text)}
-              value={email}
             />
             <TextInput
               style={[
@@ -135,6 +128,30 @@ export function  Registration(){
               onFocus={handleInputFocus}
               onChangeText={(text) => setPhone(text)}
               value={phone}
+            />
+            <TextInput
+              style={[
+                styles.input,
+                (isFocused || isFilled) && 
+                {borderColor: colors.green}
+              ]}
+              placeholder="Bairro"
+              onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
+              onChangeText={(text) => setPhone(text)}
+              value={bairro}
+            />                     
+            <TextInput
+              style={[
+                styles.input,
+                (isFocused || isFilled) && 
+                {borderColor: colors.green}
+              ]}
+              placeholder="E-mail"
+              onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
+              onChangeText={(text) => setEmail(text)}
+              value={email}
             />
             <TextInput
               style={[

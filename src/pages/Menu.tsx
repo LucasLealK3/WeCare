@@ -13,7 +13,6 @@ import { ButtonCard } from "../components/ButtonCard";
 import { useNavigation } from '@react-navigation/core';
 import { ChoiceButton } from "../components/ChoiceButton";
 import { Header } from '../components/Header';
-import { Button } from '../components/Button';
 import alimentacao from '../assets/alimentacao.png';
 import higiene from '../assets/higiene.png';
 import limpeza from '../assets/limpeza.png';
