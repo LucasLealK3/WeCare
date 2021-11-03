@@ -16,7 +16,7 @@ export function Header(){
   const navigation = useNavigation();
   function handleProfile(){
     //@ts-ignore
-    navigation.navigate('Profile'); 
+    navigation.navigate('Welcome'); 
   }
 
   return (
