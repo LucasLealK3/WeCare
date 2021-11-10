@@ -8,7 +8,9 @@ import { Welcome } from '../pages/Welcome';
 import { Registration } from '../pages/Registration';
 import { ForgotPassword } from '../pages/ForgotPassword';
 import { Menu } from '../pages/Menu';
-//import { Profile } from "../pages/Profile";
+import { Profile } from "../pages/Profile";
+import { GetHelp } from "../pages/GetHelp";
+
 
 
 const stackRoutes = createStackNavigator();
@@ -51,10 +53,14 @@ const AppRoutes: React.FC = () => (
       name="Menu"
       component={Menu} 
     /> 
-   {/*  <stackRoutes.Screen 
+    <stackRoutes.Screen 
       name="Profile"
       component={Profile} 
-    />  */}
+    /> 
+    <stackRoutes.Screen 
+      name="GetHelp"
+      component={GetHelp} 
+    /> 
 
   </stackRoutes.Navigator>
 )

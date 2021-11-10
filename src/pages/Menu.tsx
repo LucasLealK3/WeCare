@@ -1,63 +1,66 @@
-//import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState} from "react";
 import {
 StyleSheet,
-Image,
 Text,
 View
 } from 'react-native';
-import { ButtonCard } from "../components/ButtonCard";
-//import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
-//import userImg from '../assets/lucas.png';
+import colors from "../styles/colors";
+import fonts from "../styles/fonts";
+import { Button } from "../components/Button";
 import { useNavigation } from '@react-navigation/core';
 import { ChoiceButton } from "../components/ChoiceButton";
-import { Header } from '../components/Header';
+import { ButtonCard } from "../components/ButtonCard";
 import alimentacao from '../assets/alimentacao.png';
 import higiene from '../assets/higiene.png';
 import limpeza from '../assets/limpeza.png';
 import moveis from '../assets/moveis.png';
 import voluntariado from '../assets/voluntariado.png';
 import todos from '../assets/todos.png';
-import colors from "../styles/colors";
-import fonts from "../styles/fonts";
 
 
 
-export function Menu(){
-  //const [userName, setUserName] = useState<string>();
-  
-  /*   useEffect(() => {
-    async function loadStorageUserName() {
-      const user = await AsyncStorage.getItem('@plantmanager:user');
-      setUserName(user || 'Null');
-    }
-    loadStorageUserName();
-  },[]); */
+export function Menu(){  
   const navigation = useNavigation();
-
-  function teste(){
+  function handleProfile(){
     //@ts-ignore
-    navigation.navigate('Initial');
+    navigation.navigate('Profile'); 
+  }
+  
+  function handleGetHelp(){
+    //@ts-ignore
+    navigation.navigate('GetHelp'); 
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Header />
-        <Text style={styles.title}>
-            Sinta-se a vontade
-        </Text>
-        <Text style={styles.subtitle}>
-            para solicitar ajuda
-            ou ajudar alguém.
-        </Text>
+        <View>
+          <Text style={styles.greeting}>Olá, </Text>
+          <Text style={styles.userName}>
+            Lucas {/* {userName} */}
+          </Text>
+        </View>
+        <Button 
+          title="   Profile   "
+          onPress={handleProfile}
+        /> 
       </View>
+      <Text style={styles.title}>
+        Sinta-se a vontade
+      </Text>  
+      <Text style={styles.subtitle}>
+        para solicitar ajuda
+        ou ajudar alguém.
+      </Text> 
       <View style={styles.choice}>
-        <ChoiceButton title= "Pedir Ajuda"/>
         <ChoiceButton title= "Ajudar"/>
-      </View>
-      <View style={styles.cards}>
+        <ChoiceButton 
+          title= "Receber Ajuda"
+          onPress={handleGetHelp}
+        />
+      </View> 
+      
         <View style={styles.card}>        
           <ButtonCard 
             title= "Alimentação"
@@ -88,36 +91,60 @@ export function Menu(){
           <ButtonCard
             title= "Todos"
             image={todos}           
-            onPress={teste}
+            //onPress={teste}
           />                  
         </View>
-      </View>
+      
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  header: {
     width: '100%',
+    flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 20
+    alignItems: 'center',
+    paddingVertical: 30,
+    paddingHorizontal: 30
+    //marginTop: getStatusBarHeight()
+  },
+  title: {
+    fontFamily: fonts.heading,
+    fontSize: 17,
+    color: colors.heading,
+    lineHeight: 20,
+    paddingHorizontal: 30
+  },
+  subtitle: {
+    fontFamily: fonts.text,
+    fontSize: 17,
+    color: colors.heading,
+    lineHeight: 20,
+    paddingHorizontal: 30
   },
   greeting: {
     fontSize: 32,
     color: colors.heading,
     fontFamily: fonts.text
   },
-  header: {
-    paddingHorizontal: 30
+  userName: {
+    fontSize: 32,
+    fontFamily: fonts.heading,
+    color: colors.heading,
+    lineHeight: 40
   },
-  choice: {
-    alignItems: 'center',
-    marginTop: 20,
+  choice: {    
+    justifyContent: 'center',
     flexDirection: 'row',
-    paddingHorizontal: 5
-  },
-  cards: {
-    
+    paddingHorizontal: 25,
+    marginLeft: 15,    
+    marginRight: 15,
+    paddingVertical:1,
+    marginTop: 10  
   },
   card: {
     justifyContent: 'center',
@@ -126,25 +153,6 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     paddingVertical:1,
     marginTop: 5  
-
-  },
-  title: {
-    fontFamily: fonts.heading,
-    fontSize: 17,
-    color: colors.heading,
-    lineHeight: 20,
-  },
-  subtitle: {
-    fontFamily: fonts.text,
-    fontSize: 17,
-    color: colors.heading,
-    lineHeight: 20,
-  },
-  userName: {
-    fontSize: 32,
-    fontFamily: fonts.heading,
-    color: colors.heading,
-    lineHeight: 40
   }
 
 });

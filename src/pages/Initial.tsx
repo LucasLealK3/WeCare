@@ -22,7 +22,7 @@ export function  Initial(){
   
   function handleLogin(){
     //@ts-ignore
-    navigation.navigate('Login'); //Aqui é pra mandar pra pag login, só esta assim pra testar
+    navigation.navigate('GetHelp'); //Aqui é pra mandar pra pag login, só esta assim pra testar
   }
   function handleRegistration(){
     //@ts-ignore
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
   footer:{
     width: '100%',
     marginTop: 20,
-    //flexDirection: 'row',
     paddingHorizontal: 20
   }
 });
