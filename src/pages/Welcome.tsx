@@ -25,7 +25,7 @@ export function  Welcome(){
   useEffect(()=> {
     async function dados(){
     await firebase.database().ref('Alunos/1').on('value', (snapshot)=> {
-    setName(snapshot.val().nome);
+    setName(snapshot.val().Nome);
     });
     }
     dados();

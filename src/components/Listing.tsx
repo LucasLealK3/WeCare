@@ -7,8 +7,8 @@ export default function Listing({ data }){
   return(
     <View style={styles.container}>
       
-      <Text style={styles.text}>{data.nome}</Text>
-      <Text style={styles.text}>{data.idade}</Text>
+      <Text style={styles.text}>{data.Categoria}</Text>
+      <Text style={styles.text}>{data.Descricao}</Text>
     </View>
   )
 }

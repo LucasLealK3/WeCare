@@ -16,84 +16,104 @@ import { useNavigation } from '@react-navigation/core';
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
 import firebase from '../services/firebaseConnect';
-import Listagem from '../components/Listing';
+import Listing from '../components/Listing';
 
 console.disableYellowBox=true;
 
 export function GetHelp(){
-  const [nome, setNome] = useState('');
-  const [cargo, setCargo] = useState('');
-  const [usuarios, setUsuarios] = useState([]);
+  const [category, setCategory] = useState(['Alimentação', 'Higiene', 'Roupa', 'Móveis', 'Voluntáriado', 'Limpeza']);
+  const [description, setDescription] = useState('');
+  const [user, setUser] = useState('Lucas');
+  const [request, setRequest] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState(['Alimentação']);
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState (false);
+
+  function handleInputBlur(){
+    setIsFocused(false);
+    setIsFilled(!!description);
+  }
+
+  function handleInputFocus(){
+    setIsFocused(true);
+  }
 
   useEffect(()=> {
-
     async function dados(){
-
       await firebase.database().ref('Solicitacao').on('value', (snapshot)=> {
-        setUsuarios([]);
-
+        setRequest([]);
         snapshot.forEach((chilItem) => {
           let data = {
             key: chilItem.key,
-            nome: chilItem.val().nome,
-            cargo: chilItem.val().cargo
+            Categoria: chilItem.val().Categoria,
+            Descricao: chilItem.val().Descricao
           };
-
-          setUsuarios(oldArray => [...oldArray, data].reverse());
+          setRequest(oldArray => [...oldArray, data].reverse());
         })
-
         setLoading(false);
-
       })
-
     }
-
     dados();
-
-
   }, []);
 
 
+  async function Register(){
+    if(description !== ''){
+      let request = await firebase.database().ref('Solicitacao');
+      let chave = request.push().key;
 
-  async function cadastrar(){
-    if(nome !== '' && cargo !== ''){
-      let usuarios = await firebase.database().ref('Solicitacao');
-      let chave = usuarios.push().key;
-
-      usuarios.child(chave).set({
-        nome: nome,
-        cargo: cargo
+      request.child(chave).set({
+        //Usuario: user.nome,
+        Categoria: selectedCategory,
+        Descricao: description
         
       });
 
       alert('Cadastrado com sucesso!');
-      setCargo('');
-      setNome('');
+      setDescription('');
     }
   }
 
   return(
     <View style={styles.container}>
-      <Text style={styles.texto}>Nome</Text>
-      <TextInput
-      style={styles.input}
-      underlineColorAndroid="transparent"
-      onChangeText={(texto) => setNome(texto) }
-      value={nome}
-      />
+      <Text style={styles.title}>
+        Receber Ajuda
+      </Text>
+      <Text style={styles.subtitle}>
+        Escolha abaixo a categoria que deseja para sua solicitação de ajuda:
+      </Text>
 
-      <Text style={styles.texto}>Cargo</Text>
+      <Picker
+        style={styles.picker}
+        selectedValue={selectedCategory}
+        onValueChange={(itemValue) =>
+          setSelectedCategory(itemValue)
+        }
+      >
+        {
+          category.map(ct => {
+          return <Picker.Item label={ct} value={ct}/>
+          })
+        }      
+      </Picker>
       <TextInput
-      style={styles.input}
+      style={[
+        styles.input,
+        (isFocused || isFilled) && 
+        {borderColor: colors.green}
+      ]}
+      placeholder="Digite a descrição do seu pedido de ajuda."
+      onBlur={handleInputBlur}
+      onFocus={handleInputFocus}
       underlineColorAndroid="transparent"
-      onChangeText={(texto) => setCargo(texto) }
-      value={cargo}
+      onChangeText={(text) => setDescription(text) }
+      value={description}
       />
 
       <Button
-      title="Novo funcionario"
-      onPress={cadastrar}
+      title="Solicitar ajuda"
+      onPress={Register}
       />
 
       {loading ? 
@@ -103,13 +123,11 @@ export function GetHelp(){
       (
         <FlatList
         keyExtractor={item => item.key}
-        data={usuarios}
-        renderItem={ ({item}) => ( <Listagem data={item} /> )  }
+        data={request}
+        renderItem={ ({item}) => ( <Listing data={item} /> )  }
         />
       )
       }
-
-
     </View>
   );
 }
@@ -119,15 +137,39 @@ const styles = StyleSheet.create({
     flex:1,
     margin: 10,
   },
-  texto: {
-    fontSize: 20,
+  title: {
+    fontSize: 30,
+    lineHeight: 32,
+    textAlign: 'center',
+    color: colors.green,
+    fontFamily: fonts.heading,
+    marginTop: 20
   },
-  input:{
-    marginBottom: 10,
+  subtitle: {
+    fontFamily: fonts.heading,
+    fontSize: 17,
+    color: colors.heading,
+    lineHeight: 20,
+    paddingHorizontal: 30
+  },
+  picker: {
+    height: 20,
+    size: 30,
+    marginTop: 10
+  },
+  input: {
+    borderBottomWidth: 1,
+    borderColor: colors.gray,
+    color: colors.heading,
+    width: '100%',
+    fontSize: 20,
+    marginTop: 50,
     padding: 10,
-    borderWidth: 1,
-    borderColor: '#121212',
-    height: 45,
-    fontSize: 17
+    textAlign: 'center'
+  },
+  button: {
+    width: '50%',
+    marginTop: 20,
+    paddingHorizontal: 20
   }
 });
