@@ -11,6 +11,7 @@ import { Button } from "../components/Button";
 import { useNavigation } from '@react-navigation/core';
 import { ChoiceButton } from "../components/ChoiceButton";
 import { ButtonCard } from "../components/ButtonCard";
+import firebase from '../services/firebaseConnect';
 import alimentacao from '../assets/alimentacao.png';
 import higiene from '../assets/higiene.png';
 import limpeza from '../assets/limpeza.png';
@@ -20,7 +21,20 @@ import todos from '../assets/todos.png';
 
 
 
-export function Menu(){  
+export function Menu({ route }){  
+  const [name,setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  useEffect(()=> {
+    async function dados(){
+      await firebase.database().ref('Usuarios').child(route.params?.id).on('value', (snapshot) => {
+        setName(snapshot.val().nome);
+      });
+    }
+    dados();    
+  }, []); 
+
   const navigation = useNavigation();
   function handleProfile(){
     //@ts-ignore
@@ -29,7 +43,7 @@ export function Menu(){
   
   function handleGetHelp(){
     //@ts-ignore
-    navigation.navigate('GetHelp'); 
+    navigation.navigate('GetHelp', {id:route.params?.id}); 
   }
 
   return (
@@ -38,7 +52,7 @@ export function Menu(){
         <View>
           <Text style={styles.greeting}>Olá, </Text>
           <Text style={styles.userName}>
-            Lucas {/* {userName} */}
+            {name}
           </Text>
         </View>
         <Button 

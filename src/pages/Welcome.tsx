@@ -18,24 +18,24 @@ import fonts from '../styles/fonts';
 
 console.disableYellowBox=true;
 
-export function  Welcome(){
-  const [name,setName] = useState();
+export function  Welcome({ route }){
+  const [name,setName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(()=> {
     async function dados(){
-    await firebase.database().ref('Alunos/1').on('value', (snapshot)=> {
-    setName(snapshot.val().Nome);
-    });
+      await firebase.database().ref('Usuarios').child(route.params?.id).on('value', (snapshot) => {
+        setName(snapshot.val().nome);
+      });
     }
-    dados();
-    
-  }, []);
+    dados();    
+  }, []); 
+
   const navigation = useNavigation();
 
-  function handleMenu(){
-    //@ts-ignore
-    navigation.navigate('Menu');
+  async function handleMenu(){ 
+      navigation.navigate('Menu', {id:route.params?.id});   
   } 
 
   return (

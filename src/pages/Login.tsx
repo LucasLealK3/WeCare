@@ -23,14 +23,9 @@ export function  Login(){
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState (false);
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState('');
   
-  function handleWelcome(){
-    //@ts-ignore
-    navigation.navigate('Welcome');
-  }
   function handleForgotPassword(){
     //@ts-ignore
     navigation.navigate('ForgotPassword');
@@ -48,9 +43,7 @@ export function  Login(){
   async function logInto(){
     await firebase.auth().signInWithEmailAndPassword(email, password)
     .then( (value) => {
-      alert('Bem-vindo: ' + value.user.email);
-      setUser(value.user.email);
-      handleWelcome()
+      navigation.navigate('Welcome', {id:value.user.uid});
     })
     .catch( (error) => {
         alert('Algo de errado não está certo!');

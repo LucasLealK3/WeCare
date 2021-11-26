@@ -20,15 +20,26 @@ import Listing from '../components/Listing';
 
 console.disableYellowBox=true;
 
-export function GetHelp(){
+export function GetHelp({ route }){
   const [category, setCategory] = useState(['Alimentação', 'Higiene', 'Roupa', 'Móveis', 'Voluntáriado', 'Limpeza']);
   const [description, setDescription] = useState('');
-  const [user, setUser] = useState('Lucas');
+  const [requester, setRequester] = useState('');
+  const [giver, setGiver] = useState('');
   const [request, setRequest] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState(['Alimentação']);
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState (false);
+
+  useEffect(()=> {
+    async function dados(){
+      await firebase.database().ref('Usuarios').child(route.params?.id).on('value', (snapshot) => {
+        setRequester(snapshot.val().nome);
+        setRequester(route.params?.id);
+      });
+    }
+    dados();    
+  }, []);
 
   function handleInputBlur(){
     setIsFocused(false);
@@ -46,6 +57,8 @@ export function GetHelp(){
         snapshot.forEach((chilItem) => {
           let data = {
             key: chilItem.key,
+            Uid_Solicitante: chilItem.val().Uid_Solicitante,
+            Uid_Doardor: chilItem.val().Uid_Doador,
             Categoria: chilItem.val().Categoria,
             Descricao: chilItem.val().Descricao
           };
@@ -64,7 +77,8 @@ export function GetHelp(){
       let chave = request.push().key;
 
       request.child(chave).set({
-        //Usuario: user.nome,
+        Uid_Solicitante: requester,
+        Uid_Doardor: giver,
         Categoria: selectedCategory,
         Descricao: description
         
@@ -115,6 +129,9 @@ export function GetHelp(){
       title="Solicitar ajuda"
       onPress={Register}
       />
+      <Text style={styles.title}>
+        Minhas ajudas:
+      </Text>
 
       {loading ? 
       (

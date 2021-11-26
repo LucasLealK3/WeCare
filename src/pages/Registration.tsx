@@ -138,7 +138,7 @@ export function  Registration(){
               placeholder="Bairro"
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
-              onChangeText={(text) => setPhone(text)}
+              onChangeText={(text) => setBairro(text)}
               value={bairro}
             />                     
             <TextInput
