@@ -49,9 +49,9 @@ export function  Registration(){
       .then((value)=> {
         //alert(value.user.uid);
         firebase.database().ref('Usuarios').child(value.user.uid).set({
-          nome: name,
-          contato: phone,
-          bairro: bairro,          
+          Nome: name,
+          Contato: phone,
+          Bairro: bairro,          
          })
 
         alert('Usuario criado com sucesso!');

@@ -23,13 +23,11 @@ import todos from '../assets/todos.png';
 
 export function Menu({ route }){  
   const [name,setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   useEffect(()=> {
     async function dados(){
       await firebase.database().ref('Usuarios').child(route.params?.id).on('value', (snapshot) => {
-        setName(snapshot.val().nome);
+        setName(snapshot.val().Nome);
       });
     }
     dados();    
@@ -39,6 +37,11 @@ export function Menu({ route }){
   function handleProfile(){
     //@ts-ignore
     navigation.navigate('Profile'); 
+  }
+
+  function handleToHelp(){
+    //@ts-ignore
+    navigation.navigate('ToHelp', {id:route.params?.id}); 
   }
   
   function handleGetHelp(){
@@ -68,7 +71,10 @@ export function Menu({ route }){
         ou ajudar alguém.
       </Text> 
       <View style={styles.choice}>
-        <ChoiceButton title= "Ajudar"/>
+        <ChoiceButton 
+        title= "Ajudar"
+        onPress={handleToHelp}
+        />
         <ChoiceButton 
           title= "Receber Ajuda"
           onPress={handleGetHelp}

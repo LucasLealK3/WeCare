@@ -17,11 +17,11 @@ import DatePicker from 'react-native-datepicker';
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
 import firebase from '../services/firebaseConnect';
-import Listing from '../components/Listing';
+import Listing from '../components/Listing2';
 
 console.disableYellowBox=true;
 
-export function GetHelp({ route }){
+export function ToHelp({ route }){
   const [category, setCategory] = useState(['Alimentação', 'Higiene', 'Roupa', 'Móveis', 'Voluntáriado', 'Limpeza']);
   const [selectedCategory, setSelectedCategory] = useState('Alimentação');
   const [description, setDescription] = useState('');
@@ -107,14 +107,12 @@ export function GetHelp({ route }){
 
   return(
     <View style={styles.container}>
-      <Text style={styles.title}>
-        Receber Ajuda
-      </Text>
-      <Text style={styles.subtitle}>
-        Escolha abaixo a categoria que deseja para sua solicitação de ajuda:
-      </Text>
 
-      <Picker
+{/*       <Text style={styles.title}>
+        Receber Ajuda
+      </Text> */}
+
+      {/* <Picker
         style={styles.picker}
         selectedValue={selectedCategory}
         onValueChange={(itemValue) =>
@@ -126,8 +124,9 @@ export function GetHelp({ route }){
           return <Picker.Item label={ct} value={ct}/>
           })
         }      
-      </Picker>
-      <TextInput
+      </Picker> */}
+
+{/*       <TextInput
       style={[
         styles.input,
         (isFocused || isFilled) && 
@@ -139,14 +138,20 @@ export function GetHelp({ route }){
       underlineColorAndroid="transparent"
       onChangeText={(text) => setDescription(text) }
       value={description}
-      />
-
+      /> */}
+{/* 
       <Button
       title="Solicitar ajuda"
       onPress={Register}
       />
+ */}
       <Text style={styles.title}>
-        Minhas Solicitações:
+        Solicitações Recentes:
+      </Text>
+      
+
+      <Text style={styles.subtitle}>
+        Escolha abaixo uma solicitação para que possa ajudar.
       </Text>
 
       {loading ? 
@@ -156,10 +161,9 @@ export function GetHelp({ route }){
       (
 
         <FlatList
-        
-        keyExtractor={item => item.key}
-        data={request}        
-        renderItem={ ({item}) => ( <Listing data={item}/> )}        
+          keyExtractor={item => item.key}
+          data={request}        
+          renderItem={ ({item}) => ( <Listing data={item}/> )}          
         />
 
       )

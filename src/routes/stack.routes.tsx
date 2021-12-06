@@ -10,6 +10,7 @@ import { ForgotPassword } from '../pages/ForgotPassword';
 import { Menu } from '../pages/Menu';
 import { Profile } from "../pages/Profile";
 import { GetHelp } from "../pages/GetHelp";
+import { ToHelp } from "../pages/ToHelp";
 
 
 
@@ -60,6 +61,11 @@ const AppRoutes: React.FC = () => (
     <stackRoutes.Screen 
       name="GetHelp"
       component={GetHelp} 
+    /> 
+
+    <stackRoutes.Screen 
+      name="ToHelp"
+      component={ToHelp} 
     /> 
 
   </stackRoutes.Navigator>
