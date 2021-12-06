@@ -3,10 +3,6 @@
 
  O projeto utiliza o banco de dados Firebase, no caso está conectado em um banco criado para entrega do projeto.
 
- e-mail: wecareproject2021@gmail.com
- senha: wec@are12345
-
-
  Criado com framework Expo.
 
 Dependencias:
